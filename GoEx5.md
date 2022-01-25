@@ -1,12 +1,12 @@
-Primary key in DB:
++ Primary key in DB:
   - Constraint uniquely identifies each record in a database table
   - Must contain unique values
   - A primary key column mustn't contain Null value
   - Each table should have a primary key and can have only one primary key
-Primary key auto increase:
++ Primary key auto increase:
   - Make sure that no component of the primary key of a base table should be allowed to accept NULL values
   - Auto generate primary key when add new record on a table in DB
-Primary key with more than 2 fields(Composite Keys):
++ Primary key with more than 2 fields(Composite Keys):
   - It can be used to uniquely identify each row in the table when the columns are combined uniqueness of a row is guaranteed
   - When it is taken individually it does not guarantee uniqueness
   - It can also be understood as a primary key made by the combination of two or more attributes to uniquely identify every row in a table.
