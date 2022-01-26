@@ -1,0 +1,3 @@
+- Indexing helps in retrieving the data quickly
+- When querying without index, It's take time to retrieve the data because it need to scan all record.
+- When create an index, it store in somewhere in the database, so when query by index, it is faster because it doesn't need scan all record.
