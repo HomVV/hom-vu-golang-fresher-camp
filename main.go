@@ -45,7 +45,7 @@ func runService(db *gorm.DB) error {
 		// 			})
 		// 			return
 		// 		}
-
+		customers.GET("/:id", gincustomer.FindCustomer(appCtx))
 		// 		var data Customer
 
 		// 		if err := db.Where("id = ?", id).First(&data).Error; err != nil {
@@ -58,6 +58,8 @@ func runService(db *gorm.DB) error {
 		// 	})
 
 		customers.GET("", gincustomer.ListCustomer(appCtx))
+		customers.PATCH("/:id", gincustomer.UpdateCustomer(appCtx))
+		customers.DELETE("/:id", gincustomer.SoftDeleteCustomer(appCtx))
 
 		// 	customers.PATCH("/:id", func(c *gin.Context) {
 		// 		id, err := strconv.Atoi(c.Param("id"))
