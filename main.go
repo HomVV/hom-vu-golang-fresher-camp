@@ -1,6 +1,7 @@
 package main
 
 import (
+	"demo/component"
 	"demo/modules/customer/customertransport/gincustomer"
 	"log"
 
@@ -29,10 +30,12 @@ func runService(db *gorm.DB) error {
 		})
 	})
 
+	appCtx := component.NewAppContext(db)
+
 	// crud
 	customers := r.Group("/customers")
 	{
-		customers.POST("", gincustomer.CreateCustomer(db))
+		customers.POST("", gincustomer.CreateCustomer(appCtx))
 
 		// 	customers.GET("/:id", func(c *gin.Context) {
 		// 		id, err := strconv.Atoi(c.Param("id"))
@@ -42,7 +45,7 @@ func runService(db *gorm.DB) error {
 		// 			})
 		// 			return
 		// 		}
-
+		customers.GET("/:id", gincustomer.FindCustomer(appCtx))
 		// 		var data Customer
 
 		// 		if err := db.Where("id = ?", id).First(&data).Error; err != nil {
@@ -54,25 +57,9 @@ func runService(db *gorm.DB) error {
 		// 		c.JSON(http.StatusOK, data)
 		// 	})
 
-		// 	customers.GET("", func(c *gin.Context) {
-		// 		var data []Customer
-		// 		type Filter struct {
-		// 			Address string `json:"address" form:"address"`
-		// 		}
-		// 		var filter Filter
-		// 		c.ShouldBind(&filter)
-		// 		newDb := db
-		// 		if filter.Address != "" {
-		// 			newDb = db.Where("address = ?", filter.Address)
-		// 		}
-		// 		if err := newDb.Find(&data).Error; err != nil {
-		// 			c.JSON(401, map[string]interface{}{
-		// 				"error": err.Error(),
-		// 			})
-		// 			return
-		// 		}
-		// 		c.JSON(http.StatusOK, data)
-		// 	})
+		customers.GET("", gincustomer.ListCustomer(appCtx))
+		customers.PATCH("/:id", gincustomer.UpdateCustomer(appCtx))
+		customers.DELETE("/:id", gincustomer.SoftDeleteCustomer(appCtx))
 
 		// 	customers.PATCH("/:id", func(c *gin.Context) {
 		// 		id, err := strconv.Atoi(c.Param("id"))

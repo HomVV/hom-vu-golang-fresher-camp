@@ -3,7 +3,6 @@ package customerbiz
 import (
 	"context"
 	"demo/modules/customer/customermodel"
-	"errors"
 )
 
 type CreateCustomerStore interface {
@@ -18,8 +17,8 @@ func NewCreateCustomerBiz(store CreateCustomerStore) *createCustomerBiz {
 }
 func (biz *createCustomerBiz) CreateCustomer(ctx context.Context, data *customermodel.CustomerCreate) error {
 
-	if data.Name == "" {
-		return errors.New("Customer name can not be blank")
+	if err := data.Validate(); err != nil {
+		return err
 	}
 	err := biz.store.Create(ctx, data)
 	return err
