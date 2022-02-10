@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+const EntityName = "customer"
+
 type Customer struct {
 	common.SQLModel `json:",inline"`
 	Name            string `json:"name" gorm:"column:name;"`

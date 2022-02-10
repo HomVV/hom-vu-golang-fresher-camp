@@ -2,8 +2,8 @@ package customerbiz
 
 import (
 	"context"
+	"demo/common"
 	"demo/modules/customer/customermodel"
-	"errors"
 )
 
 type FindCustomerStore interface {
@@ -23,10 +23,13 @@ func NewFindCustomerBiz(store FindCustomerStore) *findCustomerBiz {
 func (biz *findCustomerBiz) FindCustomer(ctx context.Context, id int) (*customermodel.Customer, error) {
 	data, err := biz.store.FindDataByCondition(ctx, map[string]interface{}{"id": id})
 	if err != nil {
-		return nil, err
+		if err != common.RecordNotFound {
+			return nil, common.ErrCannotGetEntity(customermodel.EntityName, err)
+		}
+		return nil, common.ErrCannotGetEntity(customermodel.EntityName, err)
 	}
-	if data == nil {
-		return nil, errors.New("not available customer")
+	if data.Status == 0 {
+		return nil, common.ErrEntityDeleted(customermodel.EntityName, nil)
 	}
 	return data, nil
 }

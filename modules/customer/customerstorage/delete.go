@@ -2,6 +2,7 @@ package customerstorage
 
 import (
 	"context"
+	"demo/common"
 	"demo/modules/customer/customermodel"
 )
 
@@ -14,7 +15,7 @@ func (s *sqlStore) SoftDeleteData(
 		Where("id= ?", id).Updates(map[string]interface{}{
 		"status": 0,
 	}).Error; err != nil {
-		return err
+		return common.ErrDB(err)
 	}
 	return nil
 }

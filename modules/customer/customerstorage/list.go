@@ -20,7 +20,7 @@ func (s *sqlStore) ListDataByCondition(ctx context.Context,
 		db = db.Preload(moreKeys[i])
 	}
 
-	db = db.Table(customermodel.Customer{}.TableName()).Where(conditions)
+	db = db.Table(customermodel.Customer{}.TableName()).Where(conditions).Where(map[string]interface{}{"status": 1})
 
 	if v := filter; v != nil {
 		if v.Address != "" {
@@ -29,14 +29,14 @@ func (s *sqlStore) ListDataByCondition(ctx context.Context,
 	}
 
 	if err := db.Count(&paging.Total).Error; err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 
 	if err := db.
 		Offset((paging.Page - 1) * paging.Limit).
 		Limit(paging.Limit).
 		Find(&result).Error; err != nil {
-		return nil, err
+		return nil, common.ErrDB(err)
 	}
 
 	return result, nil
