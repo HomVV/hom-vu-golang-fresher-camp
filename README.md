@@ -1,4 +1,4 @@
-"# hom-vu-golang-fresher-camp" 
+
 Hệ thống cần pubsub và queue để:
   + Xử lý phân tán
   + Kiểm soát các luồng
