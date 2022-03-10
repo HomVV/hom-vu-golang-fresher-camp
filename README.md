@@ -4,3 +4,4 @@ Hệ thống cần pubsub và queue để:
   + Kiểm soát các luồng
   + Cải thiện hiệu suất
   + Khả năng mở rộng, quản lý và bảo mật
+  + Tách ra các microservice
